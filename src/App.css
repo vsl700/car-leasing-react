@@ -2,20 +2,55 @@
   text-align: center;
   max-width: 650px;
   padding-inline: 30px;
+  margin-inline: auto;
 }
 
 .App .Calc-input{
   text-align: start;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 70px;
+  row-gap: 10px;
+  margin-bottom: 40px;
 }
 
-.App .Calc-input .Input-container{
+.Calc-input-item{
   display: flex;
   flex-direction: column;
-  width: 100%;
 }
 
-.App .Calc-input .Input-container input,
-.App .Calc-input .Input-container select{
-  margin-bottom: 15px;
+.Calc-input-item input[type='range']{
+  margin-top: 30px;
+}
+
+.Calc-input-item input[type='range']::-webkit-slider-runnable-track {
+  height: 10px;
+  -webkit-appearance: none;
+  background-color: #13bba4;
+  margin-top: -1px;
+}
+
+.App .Calc-output-items{
+  text-align: start;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.App .Calc-output-items > div{
+  border-right: 1px solid gray;
+  margin-left: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.App .Calc-output-items > div:first-of-type{
+  margin-left: 0;
+}
+
+.App .Calc-output-items > div:last-of-type{
+  border-right: none;
+}
+
+.App .Calc-output-items p{
+  margin-block: 5px;
 }
