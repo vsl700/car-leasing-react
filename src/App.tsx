@@ -1,27 +1,106 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
+// A formatter for converting numbers to currency strings
+const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' });
+
 function App() {
+    // Inputs
+    const [ carType, setCarType ] = useState('brand-new');
+    const [ leasePeriod, setLeasePeriod ] = useState(60);
+    const [ carValue, setCarValue ] = useState(120000);
+    const [ downPayment, setDownPayment ] = useState(10);
+
+    // Outputs
+    const [ totalLeasingCost, setTotalLeasingCost ] = useState(0);
+    const [ monthlyInstallment, setMonthlyInstallment ] = useState(0);
+    const [ downPaymentPrice, setDownPaymentPrice ] = useState(0);
+    const [ interestRate, setInterestRate ] = useState(0);
+
+    // Input changes
+    const onCarTypeChanged = (value: string) => {
+        setCarType(value)
+    }
+
+    const onLeasePeriodChanged = (rawValue: string) => {
+        setLeasePeriod(parseInt(rawValue))
+    }
+
+    const onCarValueChanged = (rawValue: string) => {
+        setCarValue(parseInt(rawValue));
+    }
+
+    const onDownPaymentChanged = (rawValue: string) => {
+        setDownPayment(parseInt(rawValue));
+    }
+    // Input changes
+
+    // Calculating outputs
+    const calculateOutputs = () => {
+        // Calculate interest rate
+        let newInterestRate = 0;
+        switch(carType){
+            case 'brand-new': newInterestRate = 2.99; break;
+            case 'used': newInterestRate = 3.7; break;
+        }
+
+        // Set the interest rate
+        setInterestRate(newInterestRate)
+
+        // Validate 'carValue' and 'downPayment' inputs
+        if(carValue < 10000 || carValue > 200000 || downPayment < 10 || downPayment > 50){
+            return;
+        }
+
+        // Calculate outputs
+        let newDownPayment = carValue * (downPayment / 100);
+        let newMonthlyInterest = newInterestRate / 100 / 12;
+        let amountFinanced = carValue - newDownPayment;
+        
+        let newMonthlyInstallment = (amountFinanced * newMonthlyInterest) / (1 - Math.pow((1 + newMonthlyInterest), -leasePeriod))
+        let newTotalLeasingCost = newMonthlyInstallment * leasePeriod + newDownPayment;
+
+        // Set the calculated outputs
+        setDownPaymentPrice(newDownPayment);
+        setMonthlyInstallment(newMonthlyInstallment);
+        setTotalLeasingCost(newTotalLeasingCost);
+    }
+
+    useEffect(calculateOutputs, [carType, carValue, downPayment, leasePeriod])
+    // Calculating outputs
+
+    // Helper methods
+    const formatToEuros = (value: number): string => {
+        return formatter.format(value);
+    }
+    // Helper methods
+
     return (
-        <div className="App">
+        <div className='App'>
             <h1>Car Leasing Calculator</h1>
             <div className='Calc-input'>
                 <CalcInputItem inputId='car-type' labelText='Car Type:'>
-                    <select id='car-type'>
-                        <option value="brand-new">Brand New</option>
-                        <option value="used">Used</option>
+                    <select id='car-type' value={carType} onChange={e => onCarTypeChanged(e.target.value)}>
+                        <option value='brand-new'>Brand New</option>
+                        <option value='used'>Used</option>
                     </select>
                 </CalcInputItem>
                 <CalcInputItem inputId='lease-period' labelText='Lease Period (months):'>
-                    <input id='lease-period' type="text" defaultValue={60} />
+                    <select id='lease-period' value={leasePeriod} onChange={e => onLeasePeriodChanged(e.target.value)}>
+                        <option value="12">12</option>
+                        <option value="24">24</option>
+                        <option value="36">36</option>
+                        <option value="48">48</option>
+                        <option value="60">60</option>
+                    </select>
                 </CalcInputItem>
                 <CalcInputItem inputId='car-value' labelText='Car Value (€10,000 - €200,000):'>
-                    <input id='car-value' type="text" defaultValue={120000} />
-                    <RangeSlider min={10000} max={200000} defaultValue={120000} onValueChanged={(value) => {}} />
+                    <input id='car-value' type='text' value={carValue} onChange={e => onCarValueChanged(e.target.value)} />
+                    <input type='range' min={10000} max={200000} value={carValue} onChange={e => onCarValueChanged(e.target.value)} />
                 </CalcInputItem>
                 <CalcInputItem inputId='down-payment' labelText='Down payment (10% - 50%):'>
-                    <input id='down-payment' type="text" defaultValue={10} />
-                    <RangeSlider min={10} max={50} step={5} defaultValue={10} onValueChanged={(value) => {}} />
+                    <input id='down-payment' type='text' value={downPayment} onChange={e => onDownPaymentChanged(e.target.value)} />
+                    <input type='range' min={10} max={50} step={5} value={downPayment} onChange={e => onDownPaymentChanged(e.target.value)} />
                 </CalcInputItem>
             </div>
             <hr />
@@ -29,17 +108,17 @@ function App() {
                 <h2>Leasing Details</h2>
                 <div className='Calc-output-items'>
                     <div className='Calc-output-item'>
-                        <p>Total Leasing Cost: €128408.32</p>
-                        <p>Down Payment: €12000.00</p>
+                        <p>Total Leasing Cost: {formatToEuros(totalLeasingCost)}</p>
+                        <p>Down Payment: {formatToEuros(downPaymentPrice)}</p>
                     </div>
                     <div className='Calc-output-item'>
-                        <p>Monthly Installment: €1940.14</p>
-                        <p>Interest Rate: 2.99%</p>
+                        <p>Monthly Installment: {formatToEuros(monthlyInstallment)}</p>
+                        <p>Interest Rate: {interestRate}%</p>
                     </div>
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
 // An item containing an input, provided as a child node, and a generated label to it.
@@ -52,15 +131,6 @@ const CalcInputItem = (props: {inputId: string, labelText: string, children: Rea
             </label>
             {props.children}
         </div>
-    )
-}
-
-// ADD COMMENTS!!!
-// ADD COMMENTS!!!
-// ADD COMMENTS!!!
-const RangeSlider = (props: {min: number, max: number, step?: number, defaultValue: number, onValueChanged: (v: number) => void}) => {
-    return (
-        <input type='range' min={props.min} max={props.max} step={props.step} defaultValue={props.defaultValue} onChange={(e) => props.onValueChanged(parseInt(e.target.value))} />
     )
 }
 
