@@ -70,3 +70,20 @@
 .App .Calc-output-items p{
   margin-block: 5px;
 }
+
+/* Mobile view */
+@media only screen and (max-width: 600px){
+  .App .Calc-input{
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .App .Calc-output-items{
+    grid-template-columns: repeat(1, 1fr);
+    row-gap: 15px;
+  }
+
+  .App .Calc-output-items > div{
+    margin-left: 0;
+    border: none;
+  }
+}
