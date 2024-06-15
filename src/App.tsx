@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import CalcInputItem from './components/CalcInputItem';
 
 // A formatter for converting numbers to currency strings
 const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' });
@@ -33,7 +34,6 @@ function App() {
     const onDownPaymentChanged = (rawValue: string) => {
         setDownPayment(parseInt(rawValue));
     }
-    // Input changes
 
     // Calculating outputs
     const calculateOutputs = () => {
@@ -45,7 +45,7 @@ function App() {
         }
 
         // Set the interest rate
-        setInterestRate(newInterestRate)
+        setInterestRate(newInterestRate);
 
         // Validate 'carValue' and 'downPayment' inputs
         if(carValue < 10000 || carValue > 200000 || downPayment < 10 || downPayment > 50){
@@ -66,25 +66,26 @@ function App() {
         setTotalLeasingCost(newTotalLeasingCost);
     }
 
-    useEffect(calculateOutputs, [carType, carValue, downPayment, leasePeriod])
-    // Calculating outputs
+    useEffect(calculateOutputs, [carType, carValue, downPayment, leasePeriod]);
 
     // Helper methods
     const formatToEuros = (value: number): string => {
         return formatter.format(value);
     }
-    // Helper methods
 
     return (
         <div className='App'>
             <h1>Car Leasing Calculator</h1>
+            {/* Input form */}
             <div className='Calc-input'>
+                {/* Car type */}
                 <CalcInputItem inputId='car-type' labelText='Car Type:'>
                     <select id='car-type' value={carType} onChange={e => onCarTypeChanged(e.target.value)}>
                         <option value='brand-new'>Brand New</option>
                         <option value='used'>Used</option>
                     </select>
                 </CalcInputItem>
+                {/* Lease period */}
                 <CalcInputItem inputId='lease-period' labelText='Lease Period (months):'>
                     <select id='lease-period' value={leasePeriod} onChange={e => onLeasePeriodChanged(e.target.value)}>
                         <option value="12">12</option>
@@ -94,18 +95,22 @@ function App() {
                         <option value="60">60</option>
                     </select>
                 </CalcInputItem>
+                {/* Car value */}
                 <CalcInputItem inputId='car-value' labelText='Car Value (€10,000 - €200,000):'>
                     <input id='car-value' type='text' value={carValue} onChange={e => onCarValueChanged(e.target.value)} />
                     <input type='range' min={10000} max={200000} value={carValue} onChange={e => onCarValueChanged(e.target.value)} />
                 </CalcInputItem>
+                {/* Down payment */}
                 <CalcInputItem inputId='down-payment' labelText='Down payment (10% - 50%):'>
                     <input id='down-payment' type='text' value={downPayment} onChange={e => onDownPaymentChanged(e.target.value)} />
                     <input type='range' min={10} max={50} step={5} value={downPayment} onChange={e => onDownPaymentChanged(e.target.value)} />
                 </CalcInputItem>
             </div>
             <hr />
+            {/* Output */}
             <div className='Calc-output'>
                 <h2>Leasing Details</h2>
+                {/* Output texts */}
                 <div className='Calc-output-items'>
                     <div className='Calc-output-item'>
                         <p>Total Leasing Cost: {formatToEuros(totalLeasingCost)}</p>
@@ -117,19 +122,6 @@ function App() {
                     </div>
                 </div>
             </div>
-        </div>
-    )
-}
-
-// An item containing an input, provided as a child node, and a generated label to it.
-// The label and the input are wrapped in a 'div' so they can be manipulated by the grid system.
-const CalcInputItem = (props: {inputId: string, labelText: string, children: React.ReactElement | React.ReactElement[]}) => {
-    return (
-        <div className='Calc-input-item'>
-            <label htmlFor={props.inputId}>
-                {props.labelText}
-            </label>
-            {props.children}
         </div>
     )
 }
