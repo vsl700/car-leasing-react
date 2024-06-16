@@ -19,13 +19,3 @@
     border-color: lightgray;
   }
   
-  .Calc-input-item input[type='range']{
-    margin-top: 30px;
-  }
-  
-  .Calc-input-item input[type='range']::-webkit-slider-runnable-track {
-    height: 11px;
-    -webkit-appearance: none;
-    background-color: #13bba4;
-    margin-top: -1px;
-  }

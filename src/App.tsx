@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import CalcInputItem from './components/CalcInputItem';
 
@@ -20,11 +20,11 @@ function App() {
 
     // Input changes
     const onCarTypeChanged = (value: string) => {
-        setCarType(value)
+        setCarType(value);
     }
 
     const onLeasePeriodChanged = (rawValue: string) => {
-        setLeasePeriod(parseInt(rawValue))
+        setLeasePeriod(parseInt(rawValue));
     }
 
     const onCarValueChanged = (rawValue: string) => {
@@ -57,7 +57,7 @@ function App() {
         let newMonthlyInterest = newInterestRate / 100 / 12;
         let amountFinanced = carValue - newDownPayment;
         
-        let newMonthlyInstallment = (amountFinanced * newMonthlyInterest) / (1 - Math.pow((1 + newMonthlyInterest), -leasePeriod))
+        let newMonthlyInstallment = (amountFinanced * newMonthlyInterest) / (1 - Math.pow((1 + newMonthlyInterest), -leasePeriod));
         let newTotalLeasingCost = newMonthlyInstallment * leasePeriod + newDownPayment;
 
         // Set the calculated outputs
