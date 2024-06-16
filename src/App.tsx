@@ -28,11 +28,17 @@ function App() {
     }
 
     const onCarValueChanged = (rawValue: string) => {
-        setCarValue(parseInt(rawValue));
+        let result = parseInt(rawValue);
+        if(isNaN(result))
+            setCarValue(0);
+        else setCarValue(result);
     }
 
     const onDownPaymentChanged = (rawValue: string) => {
-        setDownPayment(parseInt(rawValue));
+        let result = parseInt(rawValue);
+        if(isNaN(result))
+            setDownPayment(0);
+        else setDownPayment(result);
     }
 
     // Calculating outputs

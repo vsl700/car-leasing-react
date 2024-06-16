@@ -1,21 +1,20 @@
 .Calc-input-item{
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  flex-direction: column;
+}
   
-  .Calc-input-item label{
-    margin-bottom: 5px;
-  }
-  
-  .Calc-input-item input:not([type='range']),
-  .Calc-input-item select{
-    padding: 8px;
-    border: 1px solid gray;
-    border-radius: 5px;
-  }
-  
-  .Calc-input-item input:not([type='range']):hover,
-  .Calc-input-item select:hover{
-    border-color: lightgray;
-  }
-  
+.Calc-input-item label{
+  margin-bottom: 5px;
+}
+
+.Calc-input-item input:not([type='range']),
+.Calc-input-item select{
+  padding: 8px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.Calc-input-item input:not([type='range']):hover,
+.Calc-input-item select:hover{
+  border-color: lightgray;
+}
