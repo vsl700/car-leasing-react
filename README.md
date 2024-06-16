@@ -1,46 +1,33 @@
-# Getting Started with Create React App
+# Car Leasing - React
+This is a ReactTS web page that can calculate the leasing of a car based on its type (brand new or used), the lease period (in months),
+the car's value and down payment (in %). This project was written as a solution to the Java & React Internship 2024 assignment
+at Prime Holding JSC.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Solution
+The whole web page is made of a heading, an input div and an output div. 
 
-## Available Scripts
+The input div plays the role of a form that takes the user input required for the calculation. It uses the grid system to display 
+the `CalcInputItem`s. A `CalcInputItem` is used to display a div, containing one or more given input nodes and a label that is 
+generated based on given input id and label text. This component is used to easily wrap the inputs and their label in a single div 
+for easier manipulation by the grid system. The component offers taking more than one inputs for cases when, for example, you have
+a text input and want to connect it with a range slider. This way the text input and the range slider will be in the same div and
+will not be displaced by the grid system.
 
-In the project directory, you can run:
+The output div simply displays the calculation results and, just like the input div, it uses grid for displaying the output texts.
+All calculations are done automatically after every change in any of the input values. However, if any of the input values is
+invalid, the calculation will not be done! This approach allows the user to easily type the number they want over the
+already written one, since the text inputs accept numbers smaller than the allowed range.
 
-### `npm start`
+The design of the web page follows the design from the screenshots from the assignment! Below you can see my implementation of 
+the assignment's design.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Screenshots
+Desktop view
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+![image](https://github.com/vsl700/car-leasing-react/assets/51147745/894c2ec3-437f-4360-86e3-6696a6451108)
 
-### `npm test`
+![image](https://github.com/vsl700/car-leasing-react/assets/51147745/53fd5ba3-42bb-4b1e-a509-4e36a3cf4ed0)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Mobile view
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+![image](https://github.com/vsl700/car-leasing-react/assets/51147745/b424a3e3-c3a9-4574-9f41-32cf242d3759)
