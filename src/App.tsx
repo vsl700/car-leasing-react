@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import CalcInputItem from './components/CalcInputItem';
+import RangeSlider from './components/RangeSlider';
 
-// A formatter for converting numbers to currency strings
+// A formatter for converting numbers to EUR currency strings
 const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' });
 
 function App() {
@@ -57,7 +58,7 @@ function App() {
         let newMonthlyInterest = newInterestRate / 100 / 12;
         let amountFinanced = carValue - newDownPayment;
         
-        let newMonthlyInstallment = (amountFinanced * newMonthlyInterest) / (1 - Math.pow((1 + newMonthlyInterest), -leasePeriod))
+        let newMonthlyInstallment = (amountFinanced * newMonthlyInterest) / (1 - Math.pow((1 + newMonthlyInterest), -leasePeriod));
         let newTotalLeasingCost = newMonthlyInstallment * leasePeriod + newDownPayment;
 
         // Set the calculated outputs
@@ -98,12 +99,12 @@ function App() {
                 {/* Car value */}
                 <CalcInputItem inputId='car-value' labelText='Car Value (€10,000 - €200,000):'>
                     <input id='car-value' type='text' value={carValue} onChange={e => onCarValueChanged(e.target.value)} />
-                    <input type='range' min={10000} max={200000} value={carValue} onChange={e => onCarValueChanged(e.target.value)} />
+                    <RangeSlider min={10000} max={200000} value={carValue} onChange={value => setCarValue(value)} />
                 </CalcInputItem>
                 {/* Down payment */}
                 <CalcInputItem inputId='down-payment' labelText='Down payment (10% - 50%):'>
                     <input id='down-payment' type='text' value={downPayment} onChange={e => onDownPaymentChanged(e.target.value)} />
-                    <input type='range' min={10} max={50} step={5} value={downPayment} onChange={e => onDownPaymentChanged(e.target.value)} />
+                    <RangeSlider min={10} max={50} step={5} value={downPayment} onChange={value => setDownPayment(value)} />
                 </CalcInputItem>
             </div>
             <hr />

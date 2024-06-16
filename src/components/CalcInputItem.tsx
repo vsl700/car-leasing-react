@@ -13,4 +13,4 @@ const CalcInputItem = (props: {inputId: string, labelText: string, children: Rea
     )
 }
 
-export default CalcInputItem
+export default CalcInputItem;

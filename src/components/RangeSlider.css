@@ -1,0 +1,14 @@
+.Default-range-slider::-webkit-slider-runnable-track:hover{
+    opacity: 70;
+}
+
+/* .Default-range-slider::-webkit-slider-runnable-track,
+.Default-range-slider::-moz-range-track {
+    height: 11px;
+    background: linear-gradient(to right, #82CFD0 0%, #82CFD0 var(--slider-percentage), #fff var(--slider-percentage), #fff 100%);
+} */
+
+/* .Default-range-slider::-moz-slider-runnable-track {
+    height: 11px;
+    background: linear-gradient(to right, #82CFD0 0%, #82CFD0 var(--slider-percentage), #fff var(--slider-percentage), #fff 100%);
+} */
